@@ -1,23 +1,30 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
-LIBS = -lmlx_Linux -lXext -lX11 -lm -lz
+CFLAGS = -Wall -Werror -Wextra -g
+LIB = -L./minilibx-linux -L./libft -lft -lmlx -lXext -lX11 -lm -lz
+INC = -I./minilibx-linux -I./includes
 SRC = $(wildcard src/*.c)
-NAME = fdf  
+NAME = fdf
 
 .PHONY: all clean fclean re bonus
 
 all: $(NAME)
 
-$(NAME): $(SRC:.c=.o)
-	$(CC) $(SRC:.c=.o) -Lmlx_linux -L/usr/lib -Imlx_linux $(LIBS) -o $(NAME)
+$(NAME): $(SRC:.c=.o) lib
+	$(CC) $(SRC:.c=.o) $(INC) $(LIB) -o $(NAME) -g
+
+lib:
+	make -C minilibx-linux/ -f Makefile.mk
+	make -C libft/
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CC) $(INC) $(CFLAGS) -O3 -c $< -o $@
 
 clean:
-	rm $(SRC:.c=.o)
+	rm -rf $(SRC:.c=.o)
 
 fclean: clean
-	rm $(NAME)
+	rm -rf $(NAME)
+	make -C minilibx-linux/ -f Makefile.mk clean
+	make -C libft/ -f Makefile fclean
 
 re: fclean all
