@@ -86,18 +86,18 @@ size_t list_len(list_t *head)
 	return (len);
 }
 
-fvector3_t *populate_arr(list_t *node, int size, int x)
+fvector3_t *populate_arr(list_t *node, int size, int y)
 {
 	fvector3_t *arr;
 	char *str;
 	int i;
 
-	arr = malloc(size * sizeof(fvector3_t));
+	arr = malloc((size + 1) * sizeof(fvector3_t));
 	str = node->str;
 	i = 0;
 	while (i < size)
 	{
-		arr[i].y = x;
+		arr[i].y = y;
 		arr[i].x = i;
 		arr[i].z = ft_atoi(str);
 		while (*str && ft_isdigit(*str))
@@ -106,6 +106,7 @@ fvector3_t *populate_arr(list_t *node, int size, int x)
 			str++;
 		i++;
 	}
+	arr[size].z = INT_MAX;
 	return (arr);
 }
 
@@ -115,15 +116,16 @@ fvector3_t **convert_to_coords(list_t *head)
 	vector2_t	dim;
 	int			i;
 
-	dim.y = count_words(head->str, " ");
-	dim.x = list_len(head);
-	arr = malloc(dim.y * sizeof(fvector3_t *));
+	dim.x = count_words(head->str, " ");
+	dim.y = list_len(head);
+	arr = malloc((dim.y + 1) * sizeof(fvector3_t *));
 	i = 0;
-	while (i < dim.x)
+	while (i < dim.y)
 	{
-		arr[i] = populate_arr(head, dim.y, i);
+		arr[i] = populate_arr(head, dim.x, i);
 		head = head->next;
 		i++;
 	}
+	arr[i] = NULL;
 	return (arr);
 }

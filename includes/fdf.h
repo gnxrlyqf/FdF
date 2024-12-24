@@ -35,7 +35,7 @@ typedef struct list_s {
 } list_t;
 
 void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, int color);
-fvector3_t mul_matrix(fvector3_t vec, matrix2_t mat, float coeff);
+fvector3_t mul_matrix(fvector3_t vec, matrix2_t mat);
 vector2_t project_point(fvector3_t point);
 matrix2_t init_m(fvector3_t x, fvector3_t y, fvector3_t z);
 fvector3_t init_v(float x, float y, float z);
@@ -48,5 +48,10 @@ size_t list_len(list_t *head);
 void draw_fdf(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
 void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
 void draw_y(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
+int mouse_hook(int b, int x, int y, fvector3_t ***arr);
+fvector3_t rotate_yaw(fvector3_t point, float angle);
+fvector3_t rotate_pitch(fvector3_t point, float angle);
+void rotate_model(fvector3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, float));
+
 
 #endif

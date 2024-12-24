@@ -15,7 +15,7 @@ fvector3_t **adjust_model(fvector3_t **arr, vector2_t dim)
 			arr[i][j].y -= (dim.y / 2);
 			arr[i][j].x *= 10;
 			arr[i][j].y *= 10;
-			arr[i][j].z *= 20;
+			arr[i][j].z *= 5;
 			j++;
 		}
 		i++;
@@ -73,5 +73,4 @@ void draw_fdf(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim)
 	arr = adjust_model(arr, dim);
 	draw_x(mlx, arr, dim);
 	draw_y(mlx, arr, dim);
-	mlx_loop(mlx.obj);
 }

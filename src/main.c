@@ -26,17 +26,7 @@ int main(int ac, char **av)
 	dim.x = list_len(head);
 	dim.y = count_words(head->str, " ");
 	fvector3_t **arr = convert_to_coords(head);
-	// int i = 0, j;
-	// while (i < dim.x)
-	// {
-	// 	j = 0;
-	// 	while (j < dim.y)
-	// 	{
-	// 		printf("%d,%d; ",(int)arr[i][j].x, (int)arr[i][j].y);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// 	printf("\n");
-	// }
+	mlx_mouse_hook(mlx.window, mouse_hook, &arr);
 	draw_fdf(mlx, arr, dim);
+	mlx_loop(mlx.obj);
 }
