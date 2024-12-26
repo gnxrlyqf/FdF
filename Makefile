@@ -10,7 +10,7 @@ NAME = fdf
 all: $(NAME)
 
 $(NAME): $(SRC:.c=.o) lib
-	$(CC) $(SRC:.c=.o) $(INC) $(LIB) -o $(NAME) -g
+	$(CC) $(SRC:.c=.o) $(INC) $(LIB) -o $(NAME)
 
 lib:
 	make -C minilibx-linux/ -f Makefile.mk

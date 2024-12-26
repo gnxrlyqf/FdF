@@ -1,15 +1,34 @@
 #include "fdf.h"
 
-int mouse_hook(int b, int x, int y, fvector3_t ***arr)
+int mouse_motion(int x, int y, ftl_t *vars)
 {
-	printf("%d", b);
-	if (b == 1)
+	static vector2_t pos_old;
+
+	if (vars->mouse_down)
 	{
-		// rotate_model(arr, acos(x / 640) + asin(x / 640), rotate_yaw);
-		// rotate_model(arr, acos(y / 480) + asin(y / 480), rotate_pitch);
+		rotate_model(&(vars->arr), (x - pos_old.x) * .01, rotate_yaw);
+		rotate_model(&(vars->arr), (y - pos_old.y) * .01, rotate_roll);
 	}
-	(void)arr;
+	pos_old.x = x;
+	pos_old.y = y;
+	loop_hook(vars);
+	return (0);
+}
+
+int mouse_down(int b, int x, int y, ftl_t *vars)
+{
+	(void)b;
 	(void)x;
 	(void)y;
+	vars->mouse_down = 1;
+	return (0);
+}
+
+int mouse_up(int b, int x, int y, ftl_t *vars)
+{
+	(void)b;
+	(void)x;
+	(void)y;
+	vars->mouse_down = 0;
 	return (0);
 }

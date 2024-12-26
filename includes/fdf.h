@@ -1,6 +1,8 @@
 #ifndef FDF_H
 #define FDF_H
 
+#define DEG 57.295779513
+
 #include <stdio.h>
 #include <mlx.h>
 #include <libft.h>
@@ -34,6 +36,13 @@ typedef struct list_s {
 	struct list_s *next;
 } list_t;
 
+typedef struct ftl_s {
+	mlx_instance_t mlx;
+	vector2_t dim;
+	fvector3_t **arr;
+	int mouse_down;
+} ftl_t;
+
 void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, int color);
 fvector3_t mul_matrix(fvector3_t vec, matrix2_t mat);
 vector2_t project_point(fvector3_t point);
@@ -48,10 +57,15 @@ size_t list_len(list_t *head);
 void draw_fdf(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
 void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
 void draw_y(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
-int mouse_hook(int b, int x, int y, fvector3_t ***arr);
+int mouse_motion(int x, int y, ftl_t *vars);
+int mouse_down(int b, int x, int y, ftl_t *vars);
+int mouse_up(int b, int x, int y, ftl_t *vars);
 fvector3_t rotate_yaw(fvector3_t point, float angle);
 fvector3_t rotate_pitch(fvector3_t point, float angle);
+fvector3_t rotate_roll(fvector3_t point, float angle);
 void rotate_model(fvector3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, float));
+int loop_hook(ftl_t *vars_ig);
+fvector3_t **adjust_model(fvector3_t **arr, vector2_t dim);
 
 
 #endif

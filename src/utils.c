@@ -102,7 +102,7 @@ vector2_t project_point(fvector3_t point)
 {
 	fvector3_t trans;
 	vector2_t out;
-	matrix2_t rot1 = init_m(init_v(1, 0, 0), init_v(0, 0, 1), init_v(0, 1, 0));
+	matrix2_t rot1 = init_m(init_v(1, 0, 0), init_v(0, 0, -1), init_v(0, -1, 0));
 	trans = mul_matrix(point, rot1);
 	trans = rotate_pitch(trans, -45);
 	trans = rotate_roll(trans, 35.264);
