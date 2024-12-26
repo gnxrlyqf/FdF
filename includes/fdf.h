@@ -51,7 +51,7 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, vector2_t dim);
+void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, t_data *img);
 fvector3_t mul_matrix(fvector3_t vec, matrix2_t mat);
 vector2_t project_point(fvector3_t point);
 matrix2_t init_m(fvector3_t x, fvector3_t y, fvector3_t z);
@@ -63,8 +63,8 @@ void	free_list_t(list_t **head);
 fvector3_t **convert_to_coords(list_t *head);
 size_t list_len(list_t *head);
 int draw_fdf(ftl_t *vars_ig);
-void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
-void draw_y(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim);
+void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim, t_data *img);
+void draw_y(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim, t_data *img);
 int mouse_motion(int x, int y, ftl_t *vars);
 int mouse_down(int b, int x, int y, ftl_t *vars);
 int mouse_up(int b, int x, int y, ftl_t *vars);

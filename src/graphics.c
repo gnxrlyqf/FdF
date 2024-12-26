@@ -1,17 +1,13 @@
 #include "fdf.h"
 
-void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, vector2_t dim)
+void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, t_data *img)
 {
 	vector2_t offset;
 	vector2_t dir;
 	int err1;
 	int err2;
-	t_data img;
 
-	(void)dim;
-	img.img = mlx_new_image(mlx.obj, 640, 640);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
+	(void)mlx;
 	offset.x = abs(p2.x - p1.x);
 	offset.y = abs(p2.y - p1.y);
 	dir.x = (p1.x < p2.x) - (p1.x > p2.x);
@@ -19,7 +15,7 @@ void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, vector2_t dim)
 	err1 = offset.x - offset.y;
 	while (1)
 	{
-		my_mlx_pixel_put(&img, p1.x, p1.y, 0x00FFFFFF);
+		my_mlx_pixel_put(img, p1.x, p1.y, 0x00FFFFFF);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		err2 = 2 * err1;
@@ -34,7 +30,6 @@ void draw_line(vector2_t p1, vector2_t p2, mlx_instance_t mlx, vector2_t dim)
 			p1.y += dir.y;
 		}
 	}
-	mlx_put_image_to_window(mlx.obj, mlx.window, &img, 0, 0);
 }
 
 void rotate_model(fvector3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, float), vector2_t dim)
@@ -43,10 +38,10 @@ void rotate_model(fvector3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, fl
 	int j;
 
 	i = -1;
-	while (++i < dim.x)
+	while (++i < dim.y)
 	{
 		j = -1;
-		while (++j < dim.y)
+		while (++j < dim.x)
 			(*arr)[i][j] = f((*arr)[i][j], angle);
 	}
 }

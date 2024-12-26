@@ -6,8 +6,8 @@ int mouse_motion(int x, int y, ftl_t *vars)
 
 	if (vars->mouse_down)
 	{
-		rotate_model(&(vars->arr), (x - old.x) * .01, rotate_yaw, vars->dim);
-		rotate_model(&(vars->arr), (y - old.y) * .01, rotate_roll, vars->dim);
+		rotate_model(&(vars->arr), (x - old.x) * -.01, rotate_yaw, vars->dim);
+		// rotate_model(&(vars->arr), (y - old.y) * .01, rotate_pitch, vars->dim);
 	}
 	old.x = x;
 	old.y = y;
