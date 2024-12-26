@@ -92,7 +92,7 @@ fvector3_t *populate_arr(list_t *node, int size, int y)
 	char *str;
 	int i;
 
-	arr = malloc((size + 1) * sizeof(fvector3_t));
+	arr = malloc(size * sizeof(fvector3_t));
 	str = node->str;
 	i = 0;
 	while (i < size)
@@ -106,7 +106,6 @@ fvector3_t *populate_arr(list_t *node, int size, int y)
 			str++;
 		i++;
 	}
-	arr[size].z = INT_MAX;
 	return (arr);
 }
 
@@ -118,7 +117,7 @@ fvector3_t **convert_to_coords(list_t *head)
 
 	dim.x = count_words(head->str, " ");
 	dim.y = list_len(head);
-	arr = malloc((dim.y + 1) * sizeof(fvector3_t *));
+	arr = malloc(dim.y * sizeof(fvector3_t *));
 	i = 0;
 	while (i < dim.y)
 	{

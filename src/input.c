@@ -2,16 +2,16 @@
 
 int mouse_motion(int x, int y, ftl_t *vars)
 {
-	static vector2_t pos_old;
+	static vector2_t old;
 
 	if (vars->mouse_down)
 	{
-		rotate_model(&(vars->arr), (x - pos_old.x) * .01, rotate_yaw);
-		rotate_model(&(vars->arr), (y - pos_old.y) * .01, rotate_roll);
+		rotate_model(&(vars->arr), (x - old.x) * .01, rotate_yaw, vars->dim);
+		rotate_model(&(vars->arr), (y - old.y) * .01, rotate_roll, vars->dim);
 	}
-	pos_old.x = x;
-	pos_old.y = y;
-	loop_hook(vars);
+	old.x = x;
+	old.y = y;
+	draw_fdf(vars);
 	return (0);
 }
 
