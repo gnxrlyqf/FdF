@@ -1,0 +1,5 @@
+.vscode
+/test_maps
+src/*.o
+libft/*.o
+minilibx-linux/*.o
