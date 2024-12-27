@@ -102,8 +102,8 @@ vertex2_t project_point(vertex3_t point)
 	trans = mul_matrix(point.pos, rot1);
 	trans = rotate_pitch(trans, -45);
 	trans = rotate_roll(trans, 35.264);
-	out.pos.x = trans.x + 240;
-	out.pos.y = 240 - trans.y;
+	out.pos.x = trans.x + (MAX / 2);
+	out.pos.y = (MAX / 2) - trans.y;
 	out.color = point.color;
 	return (out);
 }

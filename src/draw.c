@@ -1,11 +1,21 @@
 #include "fdf.h"
 
-vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim)
+float window_size(vector2_t dim)
+{
+	int bigger;
+	
+	bigger = max(dim.x, dim.y);
+	return ((MAX - 200) / bigger);
+}
+
+vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim, int *size)
 {
 	int i;
 	int j;
 
+	(void)size;
 	i = 0;
+	printf("%f\n", window_size(dim));
 	while (i < dim.y)
 	{
 		j = 0;
@@ -13,9 +23,10 @@ vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim)
 		{
 			arr[i][j].pos.x -= dim.x / 2;
 			arr[i][j].pos.y -= dim.y / 2;
-			arr[i][j].pos.x *= 30;
-			arr[i][j].pos.y *= 30;
-			arr[i][j].pos.z *= 10;
+			arr[i][j].pos.z -= dim.y / 2;
+			arr[i][j].pos.x *= window_size(dim);
+			arr[i][j].pos.y *= window_size(dim);
+			arr[i][j].pos.z *= 1;
 			j++;
 		}
 		i++;
@@ -69,7 +80,7 @@ int draw_fdf(ftl_t *vars_ig)
 {
 	t_data img;
 
-	img.img = mlx_new_image(vars_ig->mlx.obj, 480, 480);
+	img.img = mlx_new_image(vars_ig->mlx.obj, MAX, MAX);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 

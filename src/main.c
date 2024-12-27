@@ -18,15 +18,16 @@ int main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	mlx_instance_t mlx;
-	mlx.obj = mlx_init();
-	mlx.window = mlx_new_window(mlx.obj, 480, 480, "fdf");
 	int fd = open_file(av[1]);
 	list_t *head = parse_file(fd);
 	vector2_t dim;
 	dim.x = count_words(head->str, " ");
 	dim.y = list_len(head);
 	vertex3_t **arr = convert_to_coords(head);
-	arr = adjust_model(arr, dim);
+	int size;
+	arr = adjust_model(arr, dim, &size);
+	mlx.obj = mlx_init();
+	mlx.window = mlx_new_window(mlx.obj, MAX, MAX, "fdf");
 	ftl_t vars_ig;
 	vars_ig.arr = arr;
 	vars_ig.dim = dim;

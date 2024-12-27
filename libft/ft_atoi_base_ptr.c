@@ -11,12 +11,14 @@ int	idx(char c, char *base)
 	return (-1);
 }
 
-int	convert(char **str, char *cpy, char *base, int blen)
+int	convert(char **str, char *cpy, char *base)
 {
 	int	result;
 	int	i;
+	int blen;
 
 	result = 0;
+	blen = 16;
 	while (*cpy)
 	{
 		i = idx(*cpy, base);
@@ -31,21 +33,26 @@ int	convert(char **str, char *cpy, char *base, int blen)
 
 int	ft_atoi_base_ptr(char **str)
 {
-	int	sign;
-	char *base;
+	int	i;
+	char *base1;
+	char *base2;
 	char *cpy;
 	
-	base = "0123456789ABCDEF";
+	base1 = "0123456789ABCDEF";
+	base2 = "0123456789abcdef";
 	if (!*str)
 		return (0);
 	cpy = *str + 3;
-	sign = 1;
-	while (*cpy == ' ' || (*cpy >= 9 && *cpy <= 13))
-		cpy++;
+	i = 0;
+	while (i++ < 6)
+		if (cpy[i] >= 97 && cpy[i] <= 102)
+			return(convert(str, cpy, base2));
+	// while (*cpy == ' ' || (*cpy >= 9 && *cpy <= 13))
+	// 	cpy++;
 	// while (*cpy == '-' || *cpy == '+')
 	// {
 	// 	sign *= (44 - *cpy);
 	// 	cpy++;
 	// }
-	return (convert(str, cpy, base, 16) * sign);
+	return (convert(str, cpy, base1));
 }

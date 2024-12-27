@@ -2,6 +2,8 @@
 #define FDF_H
 
 #define DEG 57.295779513
+#define MIN 480
+#define MAX 720
 
 #include <stdio.h>
 #include <mlx.h>
@@ -82,7 +84,8 @@ fvector3_t rotate_yaw(fvector3_t point, float angle);
 fvector3_t rotate_pitch(fvector3_t point, float angle);
 fvector3_t rotate_roll(fvector3_t point, float angle);
 void rotate_model(vertex3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, float), vector2_t dim);
-vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim);
+vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim, int *size);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int max(int a, int b);
 
 #endif
