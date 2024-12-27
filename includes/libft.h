@@ -34,7 +34,8 @@ t_list	*add_node(t_list **head, char c);
 void	free_list(t_list **head);
 char	*make_str(t_list **head, int size);
 int		listchr_len(t_list *head);
-int		ft_atoi(const char *str);
+int		ft_atoi_ptr(char **str);
 int	ft_isdigit(int c);
+int	ft_atoi_base_ptr(char **str);
 
 #endif

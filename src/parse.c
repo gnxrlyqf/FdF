@@ -86,38 +86,37 @@ size_t list_len(list_t *head)
 	return (len);
 }
 
-fvector3_t *populate_arr(list_t *node, int size, int y)
+vertex3_t *populate_arr(list_t *node, int size, int y)
 {
-	fvector3_t *arr;
+	vertex3_t *arr;
 	char *str;
 	int i;
 
-	arr = malloc(size * sizeof(fvector3_t));
+	arr = malloc(size * sizeof(vertex3_t));
 	str = node->str;
 	i = 0;
 	while (i < size)
 	{
-		arr[i].y = y;
-		arr[i].x = i;
-		arr[i].z = ft_atoi(str);
-		while (*str && ft_isdigit(*str))
-			str++;
-		while (*str && !ft_isdigit(*str))
-			str++;
+		arr[i].color = 0x00FFFFFF;
+		arr[i].pos.y = y;
+		arr[i].pos.x = i;
+		arr[i].pos.z = ft_atoi_ptr(&str);
+		if (*str == ',')
+			arr[i].color = ft_atoi_base_ptr(&str);
 		i++;
 	}
 	return (arr);
 }
 
-fvector3_t **convert_to_coords(list_t *head)
+vertex3_t **convert_to_coords(list_t *head)
 {
-	fvector3_t	**arr;
+	vertex3_t	**arr;
 	vector2_t	dim;
 	int			i;
 
 	dim.x = count_words(head->str, " ");
 	dim.y = list_len(head);
-	arr = malloc(dim.y * sizeof(fvector3_t *));
+	arr = malloc(dim.y * sizeof(vertex3_t *));
 	i = 0;
 	while (i < dim.y)
 	{

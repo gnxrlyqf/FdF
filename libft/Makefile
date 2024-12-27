@@ -26,7 +26,7 @@ $(NAME): $(SRC:.c=.o)
 	$(CC) $(CFLAGS) -I../incluldes -o $@ -c $<
 
 clean:
-	rm -rf $(FILES:.c=.o)
+	rm -rf $(SRC:.c=.o)
 
 fclean: clean
 	rm -rf libft.a

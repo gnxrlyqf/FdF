@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-fvector3_t **adjust_model(fvector3_t **arr, vector2_t dim)
+vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim)
 {
 	int i;
 	int j;
@@ -11,11 +11,11 @@ fvector3_t **adjust_model(fvector3_t **arr, vector2_t dim)
 		j = 0;
 		while (j < dim.x)
 		{
-			arr[i][j].x -= (dim.x / 2);	
-			arr[i][j].y -= (dim.y / 2);
-			arr[i][j].x *= 10;
-			arr[i][j].y *= 10;
-			arr[i][j].z *= 3;
+			arr[i][j].pos.x -= dim.x / 2;
+			arr[i][j].pos.y -= dim.y / 2;
+			arr[i][j].pos.x *= 30;
+			arr[i][j].pos.y *= 30;
+			arr[i][j].pos.z *= 10;
 			j++;
 		}
 		i++;
@@ -23,12 +23,12 @@ fvector3_t **adjust_model(fvector3_t **arr, vector2_t dim)
 	return (arr);
 }
 
-void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim, t_data *img)
+void draw_x(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
 {
 	int i;
 	int j;
-	vector2_t p1 = {0, 0};
-	vector2_t p2 = {0, 0};
+	vertex2_t p1;
+	vertex2_t p2;
 
 	j = 0;
 	while (j < dim.x)
@@ -44,12 +44,12 @@ void draw_x(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim, t_data *img)
 	}
 }
 
-void draw_y(mlx_instance_t mlx, fvector3_t **arr, vector2_t dim, t_data *img)
+void draw_y(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
 {
 	int i;
 	int j;
-	vector2_t p1;
-	vector2_t p2;
+	vertex2_t p1;
+	vertex2_t p2;
 
 	i = 0;
 	while (i < dim.y)
@@ -69,8 +69,7 @@ int draw_fdf(ftl_t *vars_ig)
 {
 	t_data img;
 
-	// mlx_clear_window(vars_ig->mlx.obj, vars_ig->mlx.window);
-	img.img = mlx_new_image(vars_ig->mlx.obj, 640, 640);
+	img.img = mlx_new_image(vars_ig->mlx.obj, 480, 480);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 
