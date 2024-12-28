@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_words.c                                      :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 13:54:39 by mchetoui          #+#    #+#             */
-/*   Updated: 2024/12/28 13:57:39 by mchetoui         ###   ########.fr       */
+/*   Created: 2024/12/28 13:23:48 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:11:09 by mchetoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "fdf.h"
 
-int	sep(char c, char *set)
+size_t	list_len(t_list *head)
 {
-	while (*set)
+	size_t	len;
+	t_list	*curr;
+
+	curr = head;
+	len = 0;
+	while (curr)
 	{
-		if (*set == c)
-			return (1);
-		set++;
+		len++;
+		curr = curr->next;
 	}
-	return (0);
+	return (len);
 }
 
-int	count_words(char *str, char *set)
+void	t_free_list(t_list **head)
 {
-	int	i;
-	int	count;
+	t_list	*current;
+	t_list	*temp;
 
-	i = 0;
-	count = 0;
-	while (str[i])
+	if (!head)
+		return ;
+	current = *head;
+	while (current)
 	{
-		if (!sep(str[i], set))
-		{
-			count++;
-			while (str[i] && !sep(str[i], set))
-				i++;
-		}
-		else
-			i++;
+		temp = current;
+		current = current->next;
+		free(temp);
 	}
-	return (count);
+	*head = NULL;
 }

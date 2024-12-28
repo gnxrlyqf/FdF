@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_base_ptr.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 13:54:22 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 13:57:06 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libft.h"
 
 int	idx(char c, char *base)
@@ -15,7 +27,7 @@ int	convert(char **str, char *cpy, char *base)
 {
 	int	result;
 	int	i;
-	int blen;
+	int	blen;
 
 	result = 0;
 	blen = 16;
@@ -33,11 +45,11 @@ int	convert(char **str, char *cpy, char *base)
 
 int	ft_atoi_base_ptr(char **str)
 {
-	int	i;
-	char *base1;
-	char *base2;
-	char *cpy;
-	
+	int		i;
+	char	*base1;
+	char	*base2;
+	char	*cpy;
+
 	base1 = "0123456789ABCDEF";
 	base2 = "0123456789abcdef";
 	if (!*str)
@@ -46,13 +58,6 @@ int	ft_atoi_base_ptr(char **str)
 	i = 0;
 	while (i++ < 6)
 		if (cpy[i] >= 97 && cpy[i] <= 102)
-			return(convert(str, cpy, base2));
-	// while (*cpy == ' ' || (*cpy >= 9 && *cpy <= 13))
-	// 	cpy++;
-	// while (*cpy == '-' || *cpy == '+')
-	// {
-	// 	sign *= (44 - *cpy);
-	// 	cpy++;
-	// }
+			return (convert(str, cpy, base2));
 	return (convert(str, cpy, base1));
 }

@@ -1,45 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 13:16:08 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:10:21 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-float window_size(vector2_t dim)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	int bigger;
-	
-	bigger = max(dim.x, dim.y);
-	return ((MAX - 200) / bigger);
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
-vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim, int *size)
+void	draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img)
 {
-	int i;
-	int j;
+	t_vector2	offset;
+	t_vector2	dir;
+	t_vector2	err;
+	int			step;
 
-	(void)size;
-	i = 0;
-	printf("%f\n", window_size(dim));
-	while (i < dim.y)
+	offset.x = abs(p2.pos.x - p1.pos.x);
+	offset.y = abs(p2.pos.y - p1.pos.y);
+	dir.x = (p1.pos.x < p2.pos.x) - (p1.pos.x > p2.pos.x);
+	dir.y = (p1.pos.y < p2.pos.y) - (p1.pos.y > p2.pos.y);
+	err.x = offset.x - offset.y;
+	step = -1;
+	while (1)
 	{
-		j = 0;
-		while (j < dim.x)
-		{
-			arr[i][j].pos.x -= dim.x / 2;
-			arr[i][j].pos.y -= dim.y / 2;
-			arr[i][j].pos.z -= dim.y / 2;
-			arr[i][j].pos.x *= window_size(dim);
-			arr[i][j].pos.y *= window_size(dim);
-			arr[i][j].pos.z *= 1;
-			j++;
-		}
-		i++;
+		p1.col = get_grad(p1.col, p2.col, ++step, max(offset.x, offset.y));
+		my_mlx_pixel_put(img, p1.pos.x, p1.pos.y, p1.col);
+		if (p1.pos.x == p2.pos.x && p1.pos.y == p2.pos.y)
+			break ;
+		err.y = 2 * err.x;
+		err.x = err.x - offset.y * (err.y > -offset.y);
+		err.x = err.x + offset.x * (err.y < offset.x);
+		p1.pos.x = p1.pos.x + dir.x * (err.y > -offset.y);
+		p1.pos.y = p1.pos.y + dir.y * (err.y < offset.x);
 	}
-	return (arr);
 }
 
-void draw_x(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
+void	draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img)
 {
-	int i;
-	int j;
-	vertex2_t p1;
-	vertex2_t p2;
+	int			i;
+	int			j;
+	t_vertex2	p1;
+	t_vertex2	p2;
 
 	j = 0;
 	while (j < dim.x)
@@ -49,18 +62,18 @@ void draw_x(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
 		{
 			p1 = project_point(arr[i][j]);
 			p2 = project_point(arr[++i][j]);
-			draw_line(p1, p2, mlx, img);
+			draw_line(p1, p2, img);
 		}
 		j++;
 	}
 }
 
-void draw_y(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
+void	draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img)
 {
-	int i;
-	int j;
-	vertex2_t p1;
-	vertex2_t p2;
+	int			i;
+	int			j;
+	t_vertex2	p1;
+	t_vertex2	p2;
 
 	i = 0;
 	while (i < dim.y)
@@ -70,22 +83,21 @@ void draw_y(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img)
 		{
 			p1 = project_point(arr[i][j]);
 			p2 = project_point(arr[i][++j]);
-			draw_line(p1, p2, mlx, img);
+			draw_line(p1, p2, img);
 		}
 		i++;
 	}
 }
-	
-int draw_fdf(ftl_t *vars_ig)
+
+int	draw_fdf(t_ftl *vars)
 {
-	t_data img;
+	t_data	img;
 
-	img.img = mlx_new_image(vars_ig->mlx.obj, MAX, MAX);
+	img.img = mlx_new_image(vars->mlx.obj, MAX, MAX);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-
-	draw_x(vars_ig->mlx, vars_ig->arr, vars_ig->dim, &img);
-	draw_y(vars_ig->mlx, vars_ig->arr, vars_ig->dim, &img);
-	mlx_put_image_to_window(vars_ig->mlx.obj, vars_ig->mlx.window, img.img, 0, 0);
+			&img.endian);
+	draw_x(vars->arr, vars->dim, &img);
+	draw_y(vars->arr, vars->dim, &img);
+	mlx_put_image_to_window(vars->mlx.obj, vars->mlx.window, img.img, 0, 0);
 	return (0);
 }

@@ -1,41 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 13:16:32 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:10:53 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <mlx.h>
 #include "fdf.h"
 
-void print_list(list_t *list)
+int	main(int ac, char **av)
 {
-	list_t *curr;
+	t_ftl	vars;
+	int		fd;
+	t_list	*head;
+	int		size;
 
-	curr = list;
-	while (curr)
-	{
-		printf("%s", curr->str);
-		curr = curr->next;
-	}
-}
-
-int main(int ac, char **av)
-{
 	if (ac != 2)
 		return (1);
-	mlx_instance_t mlx;
-	int fd = open_file(av[1]);
-	list_t *head = parse_file(fd);
-	vector2_t dim;
-	dim.x = count_words(head->str, " ");
-	dim.y = list_len(head);
-	vertex3_t **arr = convert_to_coords(head);
-	int size;
-	arr = adjust_model(arr, dim, &size);
-	mlx.obj = mlx_init();
-	mlx.window = mlx_new_window(mlx.obj, MAX, MAX, "fdf");
-	ftl_t vars_ig;
-	vars_ig.arr = arr;
-	vars_ig.dim = dim;
-	vars_ig.mlx = mlx;
-	vars_ig.mouse_down = 0;
-	draw_fdf(&vars_ig);
-	mlx_hook(mlx.window, 4, (1L<<2), mouse_down, &vars_ig);
-	mlx_hook(mlx.window, 5, (1L<<3), mouse_up, &vars_ig);
-	mlx_hook(mlx.window, 6, (1L<<6), mouse_motion, &vars_ig);
-	mlx_loop(mlx.obj);
+	fd = open_file(av[1]);
+	head = parse_file(fd);
+	vars.dim.x = count_words(head->str, " ");
+	vars.dim.y = list_len(head);
+	vars.arr = convert_to_coords(head);
+	vars.arr = adjust_model(vars.arr, vars.dim, &size);
+	vars.mlx.obj = mlx_init();
+	vars.mlx.window = mlx_new_window(vars.mlx.obj, MAX, MAX, "fdf");
+	vars.mouse_down = 0;
+	draw_fdf(&vars);
+	mlx_hook(vars.mlx.window, 4, (1L << 2), mouse_down, &vars);
+	mlx_hook(vars.mlx.window, 5, (1L << 3), mouse_up, &vars);
+	mlx_hook(vars.mlx.window, 6, (1L << 6), mouse_motion, &vars);
+	mlx_loop(vars.mlx.obj);
 }

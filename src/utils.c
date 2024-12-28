@@ -1,65 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 13:16:59 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:11:17 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-fvector3_t rotate_yaw(fvector3_t point, float angle)
+t_fvector3	init_v(float x, float y, float z)
 {
-	fvector3_t x;
-	fvector3_t y;
-	fvector3_t z;
-	matrix2_t rot;
-
-	x = init_v(cos(angle), -sin(angle), 0);
-	y = init_v(sin(angle), cos(angle), 0);
-	z = init_v(0, 0, 1);
-	rot = init_m(x, y, z);
-	return(mul_matrix(point, rot));
-}
-
-fvector3_t rotate_pitch(fvector3_t point, float angle)
-{
-	fvector3_t x;
-	fvector3_t y;
-	fvector3_t z;
-	matrix2_t rot;
-
-	x = init_v(cos(angle), 0, sin(angle));
-	y = init_v(0, 1, 0);
-	z = init_v(-sin(angle), 0, cos(angle));
-	rot = init_m(x, y, z);
-	return(mul_matrix(point, rot));
-}
-
-fvector3_t rotate_roll(fvector3_t point, float angle)
-{
-	fvector3_t x;
-	fvector3_t y;
-	fvector3_t z;
-	matrix2_t rot;
-
-	x = init_v(1, 0, 0);
-	y = init_v(0, cos(angle), -sin(angle));
-	z = init_v(0, sin(angle), cos(angle));
-	rot = init_m(x, y, z);
-	return(mul_matrix(point, rot));
-}
-
-matrix2_t init_m(fvector3_t x, fvector3_t y, fvector3_t z)
-{
-	matrix2_t out;
+	t_fvector3	out;
 
 	out.x = x;
 	out.y = y;
 	out.z = z;
-
 	return (out);
 }
 
-fvector3_t init_v(float x, float y, float z)
+t_fvector3	mul_matrix(t_fvector3 vec, t_matrix2 mat)
 {
-	fvector3_t out;
+	t_fvector3	out;
 
-	out.x = x;
-	out.y = y;
-	out.z = z;
-
+	out.x = vec.x * mat.x.x + vec.y * mat.x.y + vec.z * mat.x.z;
+	out.y = vec.x * mat.y.x + vec.y * mat.y.y + vec.z * mat.y.z;
+	out.z = vec.x * mat.z.x + vec.y * mat.z.y + vec.z * mat.z.z;
 	return (out);
+}
+
+int	max(int a, int b)
+{
+	return (a * (a >= b) + b * (a < b));
+}
+
+t_color	int_to_color(int color)
+{
+	t_color	out;
+
+	out.a = (color >> 24) & 0xFF;
+	out.r = (color >> 16) & 0xFF;
+	out.g = (color >> 8) & 0xFF;
+	out.b = color & 0xFF;
+	return (out);
+}
+
+int	color_to_int(t_color color)
+{
+	return ((color.a << 24) | (color.r << 16) | (color.g << 8) | color.b);
 }

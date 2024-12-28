@@ -1,61 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 14:06:00 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:09:26 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
-#define FDF_H
+# define FDF_H
 
-#define DEG 57.295779513
-#define MIN 480
-#define MAX 720
+# define DEG 57.295779513
+# define MIN 480
+# define MAX 720
 
-#include <stdio.h>
-#include <mlx.h>
-#include <libft.h>
-#include <stdlib.h>
-#include <math.h>
-#include <fcntl.h>
+# include <stdio.h>
+# include <mlx.h>
+# include <libft.h>
+# include <stdlib.h>
+# include <math.h>
+# include <fcntl.h>
 
-typedef struct mlx_instance_s {
-	void *obj;
-	void *window;
-} mlx_instance_t;
+typedef struct s_mlx_instance
+{
+	void	*obj;
+	void	*window;
+}				t_mlx_instance;
 
-typedef struct vector2_s {
-	int x, y;
-} vector2_t;
+typedef struct s_vector2
+{
+	int	x;
+	int	y;
+}				t_vector2;
 
-typedef struct fvector3_s {
-	float x, y, z;
-} fvector3_t;
+typedef struct s_fvector3
+{
+	float	x;
+	float	y;
+	float	z;
+}				t_fvector3;
 
-typedef struct vertex3_s {
-	fvector3_t pos;
-	unsigned int color;
-} vertex3_t;
+typedef struct s_vertex3
+{
+	t_fvector3		pos;
+	unsigned int	col;
+}				t_vertex3;
 
-typedef struct vertex2_s {
-	vector2_t pos;
-	unsigned int color;
-} vertex2_t;
+typedef struct s_vertex2
+{
+	t_vector2		pos;
+	unsigned int	col;
+}				t_vertex2;
 
-typedef struct matrix2_s {
-	fvector3_t x, y, z;
-} matrix2_t;
+typedef struct s_matrix2
+{
+	t_fvector3	x;
+	t_fvector3	y;
+	t_fvector3	z;
+}				t_matrix2;
 
-typedef struct color_s {
-	int a, r, g, b;
-} color_t;
+typedef struct s_color
+{
+	int	a;
+	int	r;
+	int	g;
+	int	b;
+}				t_color;
 
-typedef struct list_s {
-	char *str;
-	struct list_s *next;
-} list_t;
+typedef struct s_list
+{
+	char			*str;
+	struct s_list	*next;
+}				t_list;
 
-typedef struct ftl_s {
-	mlx_instance_t mlx;
-	vector2_t dim;
-	vertex3_t **arr;
-	int mouse_down;
-} ftl_t;
+typedef struct s_ftl
+{
+	t_mlx_instance	mlx;
+	t_vector2		dim;
+	t_vertex3		**arr;
+	int				mouse_down;
+}				t_ftl;
 
-typedef struct	s_data {
+typedef struct s_data
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -63,29 +93,33 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-void draw_line(vertex2_t p1, vertex2_t p2, mlx_instance_t mlx, t_data *img);
-fvector3_t mul_matrix(fvector3_t vec, matrix2_t mat);
-vertex2_t project_point(vertex3_t point);
-matrix2_t init_m(fvector3_t x, fvector3_t y, fvector3_t z);
-fvector3_t init_v(float x, float y, float z);
-int open_file(char *filename);
-list_t *parse_file(int fd);
-list_t	*new_node(char *str);
-void	free_list_t(list_t **head);
-vertex3_t **convert_to_coords(list_t *head);
-size_t list_len(list_t *head);
-int draw_fdf(ftl_t *vars_ig);
-void draw_x(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img);
-void draw_y(mlx_instance_t mlx, vertex3_t **arr, vector2_t dim, t_data *img);
-int mouse_motion(int x, int y, ftl_t *vars);
-int mouse_down(int b, int x, int y, ftl_t *vars);
-int mouse_up(int b, int x, int y, ftl_t *vars);
-fvector3_t rotate_yaw(fvector3_t point, float angle);
-fvector3_t rotate_pitch(fvector3_t point, float angle);
-fvector3_t rotate_roll(fvector3_t point, float angle);
-void rotate_model(vertex3_t ***arr, float angle, fvector3_t (*f)(fvector3_t, float), vector2_t dim);
-vertex3_t **adjust_model(vertex3_t **arr, vector2_t dim, int *size);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int max(int a, int b);
+void		draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img);
+t_fvector3	mul_matrix(t_fvector3 vec, t_matrix2 mat);
+t_vertex2	project_point(t_vertex3 point);
+t_fvector3	init_v(float x, float y, float z);
+int			open_file(char *filename);
+t_list		*parse_file(int fd);
+t_list		*new_node(char *str);
+void		t_free_list(t_list **head);
+t_vertex3	**convert_to_coords(t_list *head);
+size_t		list_len(t_list *head);
+int			draw_fdf(t_ftl *vars_ig);
+void		draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img);
+void		draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img);
+int			mouse_motion(int x, int y, t_ftl *vars);
+int			mouse_down(int b, int x, int y, t_ftl *vars);
+int			mouse_up(int b, int x, int y, t_ftl *vars);
+t_fvector3	rotate_x(t_fvector3 point, float angle);
+t_fvector3	rotate_y(t_fvector3 point, float angle);
+t_fvector3	rotate_z(t_fvector3 point, float angle);
+void		rotate_model(t_vertex3 ***arr, float angle,
+				t_fvector3 (*f)(t_fvector3, float), t_vector2 dim);
+t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim, int *size);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int			max(int a, int b);
+int			color_to_int(t_color color);
+t_color		int_to_color(int color);
+int			max(int a, int b);
+int			get_grad(int p1color, int p2color, int step, int steps);
 
 #endif

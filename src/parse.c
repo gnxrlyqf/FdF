@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mchetoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 13:16:43 by mchetoui          #+#    #+#             */
+/*   Updated: 2024/12/28 14:11:01 by mchetoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 #include <libft.h>
 
-list_t	*new_node(char *str)
+t_list	*new_node(char *str)
 {
-	list_t	*new;
+	t_list	*new;
 
-	new = malloc(sizeof(list_t));
+	new = malloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
 	new->str = str;
@@ -13,28 +25,12 @@ list_t	*new_node(char *str)
 	return (new);
 }
 
-void	free_list_t(list_t **head)
+int	open_file(char *filename)
 {
-	list_t	*current;
-	list_t	*temp;
+	char	*str;
+	char	*ext;
 
-	if (!head)
-		return ;
-	current = *head;
-	while (current)
-	{
-		temp = current;
-		current = current->next;
-		free(temp);
-	}
-	*head = NULL;
-}
-
-int open_file(char *filename)
-{
-	char *str;
-	char *ext = "fdf.";
-
+	ext = "fdf.";
 	str = filename;
 	if (!str || !*str)
 		return (-1);
@@ -45,12 +41,12 @@ int open_file(char *filename)
 	return (open(filename, O_RDONLY));
 }
 
-list_t *parse_file(int fd)
+t_list	*parse_file(int fd)
 {
-	list_t *head;
-	list_t *curr;
+	t_list	*head;
+	t_list	*curr;
 	char	*str;
-	int term_count;
+	int		term_count;
 
 	str = get_next_line(fd);
 	term_count = count_words(str, " ");
@@ -64,59 +60,44 @@ list_t *parse_file(int fd)
 		if (!str)
 			break ;
 		if (!*str || count_words(str, " ") != term_count)
-			return (free(str), free_list_t(&head), NULL);
+			return (free(str), t_free_list(&head), NULL);
 		curr->next = new_node(str);
 		curr = curr->next;
 	}
 	return (head);
 }
 
-size_t list_len(list_t *head)
+t_vertex3	*populate_arr(t_list *node, int size, int y)
 {
-	size_t len;
-	list_t *curr;
+	t_vertex3	*arr;
+	char		*str;
+	int			i;
 
-	curr = head;
-	len = 0;
-	while (curr)
-	{
-		len++;
-		curr = curr->next;
-	}
-	return (len);
-}
-
-vertex3_t *populate_arr(list_t *node, int size, int y)
-{
-	vertex3_t *arr;
-	char *str;
-	int i;
-
-	arr = malloc(size * sizeof(vertex3_t));
+	arr = malloc(size * sizeof(t_vertex3));
 	str = node->str;
 	i = 0;
 	while (i < size)
 	{
-		arr[i].color = 0x00FFFFFF;
+		arr[i].col = 0x00FFFFFF;
 		arr[i].pos.y = y;
 		arr[i].pos.x = i;
 		arr[i].pos.z = ft_atoi_ptr(&str);
 		if (*str == ',')
-			arr[i].color = ft_atoi_base_ptr(&str);
+			arr[i].col = ft_atoi_base_ptr(&str);
 		i++;
 	}
 	return (arr);
 }
 
-vertex3_t **convert_to_coords(list_t *head)
+t_vertex3	**convert_to_coords(t_list *head)
 {
-	vertex3_t	**arr;
-	vector2_t	dim;
+	t_vertex3	**arr;
+	t_vector2	dim;
 	int			i;
 
 	dim.x = count_words(head->str, " ");
 	dim.y = list_len(head);
-	arr = malloc(dim.y * sizeof(vertex3_t *));
+	arr = malloc(dim.y * sizeof(t_vertex3 *));
 	i = 0;
 	while (i < dim.y)
 	{

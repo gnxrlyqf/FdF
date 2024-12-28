@@ -12,12 +12,12 @@
 
 #include "../includes/libft.h"
 
-t_list	*add_node(t_list **head, char c)
+t_list_gnl	*add_node(t_list_gnl **head, char c)
 {
-	t_list	*curr;
-	t_list	*new;
+	t_list_gnl	*curr;
+	t_list_gnl	*new;
 
-	new = malloc(sizeof(t_list));
+	new = malloc(sizeof(t_list_gnl));
 	if (!new)
 		return (NULL);
 	new->c = c;
@@ -34,10 +34,10 @@ t_list	*add_node(t_list **head, char c)
 	return (new);
 }
 
-void	free_list(t_list **head)
+void	free_list(t_list_gnl **head)
 {
-	t_list	*current;
-	t_list	*temp;
+	t_list_gnl	*current;
+	t_list_gnl	*temp;
 
 	if (!head)
 		return ;
@@ -51,12 +51,12 @@ void	free_list(t_list **head)
 	*head = NULL;
 }
 
-char	*make_str(t_list **head, int size)
+char	*make_str(t_list_gnl **head, int size)
 {
-	char	*new;
-	t_list	*curr;
-	t_list	*temp;
-	int		i;
+	char		*new;
+	t_list_gnl	*curr;
+	t_list_gnl	*temp;
+	int			i;
 
 	new = malloc(sizeof(char) * (size + 1));
 	if (!new || !*head || !size)
@@ -76,10 +76,10 @@ char	*make_str(t_list **head, int size)
 	return (new - size);
 }
 
-int	listchr_len(t_list *head)
+int	listchr_len(t_list_gnl *head)
 {
-	int		len;
-	t_list	*curr;
+	int			len;
+	t_list_gnl	*curr;
 
 	curr = head;
 	len = 0;
