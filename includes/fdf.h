@@ -101,6 +101,7 @@ t_vertex2	project_point(t_vertex3 point);
 t_fvector3	init_v(float x, float y, float z);
 int			open_file(char *filename);
 t_list		*parse_file(int fd);
+void		scan_file(int fd);
 t_list		*new_node(char *str);
 void		free_t_list(t_list **head);
 t_vertex3	**convert_to_coords(t_list *head);
@@ -119,12 +120,12 @@ void		rotate_model(t_vertex3 ***arr, float angle,
 t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int			max(int a, int b);
-int			color_to_int(t_color color);
 t_color		int_to_color(int color);
 int			max(int a, int b);
 int			get_grad(int p1color, int p2color, int step, int steps);
 void		translate_model(t_vertex3 ***arr, int x, int y, t_vector2 dim);
 int			close_window(t_vars *vars);
 void		free_model(t_vertex3 **arr, int size);
+void throw_err(int code, char *str, t_list **head);
 
 #endif

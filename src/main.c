@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	t_list	*head;
 
 	if (ac != 2)
-		return (1);
+		throw_err(2, NULL, NULL);
 	fd = open_file(av[1]);
 	head = parse_file(fd);
 	vars.dim.x = count_words(head->str, " ");

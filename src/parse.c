@@ -13,22 +13,11 @@
 #include "fdf.h"
 #include <libft.h>
 
-t_list	*new_node(char *str)
-{
-	t_list	*new;
-
-	new = malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->str = str;
-	new->next = NULL;
-	return (new);
-}
-
 int	open_file(char *filename)
 {
 	char	*str;
 	char	*ext;
+	int fd;
 
 	ext = "fdf.";
 	str = filename;
@@ -37,8 +26,34 @@ int	open_file(char *filename)
 	str += ft_strlen(str);
 	while (*ext)
 		if (*(ext++) != *(--str))
-			return (-1);
+			throw_err(1, NULL, NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		throw_err(3, NULL, NULL);
+	scan_file(fd);
 	return (open(filename, O_RDONLY));
+}
+
+void scan_file(int fd)
+{
+	char *str;
+	char *cpy;
+
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (!str)
+			break ;
+		cpy = str;
+		while (*cpy)
+		{
+			if (!ft_strchr("0123456789 ,-xabcdefABCDEF\n\t\r", *cpy))
+				throw_err(4, str, NULL);
+			cpy++;
+		}
+		free(str);
+	}
+	close(fd);
 }
 
 t_list	*parse_file(int fd)
@@ -51,7 +66,7 @@ t_list	*parse_file(int fd)
 	str = get_next_line(fd);
 	word_count = count_words(str, " ");
 	if (!str || !*str || word_count < 1)
-		return (free(str), NULL);
+		throw_err(5, str, NULL);
 	head = new_node(str);
 	curr = head;
 	while (1)
@@ -60,7 +75,7 @@ t_list	*parse_file(int fd)
 		if (!str)
 			break ;
 		if (!*str || count_words(str, " ") != word_count)
-			return (free(str), free_t_list(&head), NULL);
+			throw_err(6, str, &head);
 		curr->next = new_node(str);
 		curr = curr->next;
 	}
@@ -97,6 +112,8 @@ t_vertex3	**convert_to_coords(t_list *head)
 
 	dim.x = count_words(head->str, " ");
 	dim.y = list_len(head);
+	if (dim.x < 2)
+		throw_err(5, NULL, &head);
 	arr = malloc(dim.y * sizeof(t_vertex3 *));
 	i = 0;
 	while (i < dim.y)

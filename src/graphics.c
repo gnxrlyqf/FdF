@@ -12,6 +12,17 @@
 
 #include "fdf.h"
 
+t_color	int_to_color(int color)
+{
+	t_color	out;
+
+	out.a = (color >> 24) & 0xFF;
+	out.r = (color >> 16) & 0xFF;
+	out.g = (color >> 8) & 0xFF;
+	out.b = color & 0xFF;
+	return (out);
+}
+
 int	get_grad(int p1color, int p2color, int step, int steps)
 {
 	t_color	argb1;
@@ -29,7 +40,7 @@ int	get_grad(int p1color, int p2color, int step, int steps)
 	out.r = argb1.r + round(grad.r * step);
 	out.g = argb1.g + round(grad.g * step);
 	out.b = argb1.b + round(grad.b * step);
-	return (color_to_int(out));
+	return ((out.a << 24) | (out.r << 16) | (out.g << 8) | out.b);
 }
 int peak(t_vertex3 **arr, t_vector2 dim)
 {

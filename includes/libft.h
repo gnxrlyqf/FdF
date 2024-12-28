@@ -37,5 +37,6 @@ int			listchr_len(t_list_gnl *head);
 int			ft_atoi_ptr(char **str);
 int			ft_isdigit(int c);
 int			ft_atoi_base_ptr(char **str);
+char		*ft_strchr(const char *str, int c);
 
 #endif
