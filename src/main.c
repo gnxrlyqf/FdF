@@ -16,13 +16,13 @@
 int	main(int ac, char **av)
 {
 	t_vars	vars;
-	int		fd;
 	t_list	*head;
 
-	if (ac != 2)
+	if (ac > 3)
 		throw_err(2, NULL, NULL);
-	fd = open_file(av[1]);
-	head = parse_file(fd);
+	if (SIZE > 1080)
+		throw_err(7, NULL, NULL);
+	head = parse_file(open_file(av[1]));
 	vars.dim.x = count_words(head->str, " ");
 	vars.dim.y = list_len(head);
 	vars.arr = convert_to_coords(head);
@@ -32,6 +32,7 @@ int	main(int ac, char **av)
 	vars.mlx.window = mlx_new_window(vars.mlx.obj, SIZE, SIZE, "fdf");
 	vars.left_down = 0;
 	vars.right_down = 0;
+	vars.type = 1;
 	draw_fdf(&vars);
 	mlx_hook(vars.mlx.window, 4, (1L << 2), mouse_down, &vars);
 	mlx_hook(vars.mlx.window, 5, (1L << 3), mouse_up, &vars);

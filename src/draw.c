@@ -49,7 +49,7 @@ void	draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img)
 	}
 }
 
-void	draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img)
+void	draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img, int type)
 {
 	int			i;
 	int			j;
@@ -62,15 +62,15 @@ void	draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img)
 		i = 0;
 		while (i + 1 < dim.y)
 		{
-			p1 = project_point(arr[i][j]);
-			p2 = project_point(arr[++i][j]);
+			p1 = project_point(arr[i][j], type);
+			p2 = project_point(arr[++i][j], type);
 			draw_line(p1, p2, img);
 		}
 		j++;
 	}
 }
 
-void	draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img)
+void	draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img, int type)
 {
 	int			i;
 	int			j;
@@ -83,8 +83,8 @@ void	draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img)
 		j = 0;
 		while (j + 1 < dim.x)
 		{
-			p1 = project_point(arr[i][j]);
-			p2 = project_point(arr[i][++j]);
+			p1 = project_point(arr[i][j], type);
+			p2 = project_point(arr[i][++j], type);
 			draw_line(p1, p2, img);
 		}
 		i++;
@@ -98,8 +98,8 @@ int	draw_fdf(t_vars *vars)
 	img.img = mlx_new_image(vars->mlx.obj, SIZE, SIZE);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	draw_x(vars->arr, vars->dim, &img);
-	draw_y(vars->arr, vars->dim, &img);
+	draw_x(vars->arr, vars->dim, &img, vars->type);
+	draw_y(vars->arr, vars->dim, &img, vars->type);
 	mlx_put_image_to_window(vars->mlx.obj, vars->mlx.window, img.img, 0, 0);
 	mlx_destroy_image(vars->mlx.obj, img.img);
 	return (0);

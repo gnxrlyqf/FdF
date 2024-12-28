@@ -68,7 +68,7 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 	float scale;
 
 	max_height = peak(arr, dim);
-	scale = (SIZE - 100) / (float)max(max(dim.x, dim.y), max_height);
+	scale = (SIZE - (SIZE / 10)) / (float)max(max(dim.x, dim.y), max_height);
 	i = 0;
 	while (i < dim.y)
 	{
@@ -88,16 +88,26 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 	return (arr);
 }
 
-t_vertex2	project_point(t_vertex3 point)
+t_vertex2	project_point(t_vertex3 point, int type)
+{
+	if (type == 1)
+		return (project_isometric(point));
+	// if (type == 2)
+	// 	return (project_perspective(point));
+	return(project_isometric(point));
+}
+
+
+t_vertex2	project_isometric(t_vertex3 point)
 {
 	t_fvector3	transform;
 	t_vertex2	out;
-	t_matrix2	cam;
+	t_matrix3	cam;
 
-	cam.x = init_v(1, 0, 0);
-	cam.y = init_v(0, 0, -1);
-	cam.z = init_v(0, -1, 0);
-	transform = mul_matrix(point.pos, cam);
+	cam.x = init_v3(1, 0, 0);
+	cam.y = init_v3(0, 0, -1);
+	cam.z = init_v3(0, -1, 0);
+	transform = mul_matrix3(point.pos, cam);
 	transform = rotate_y(transform, -45);
 	transform = rotate_z(transform, 35.264);
 	out.pos.x = transform.x + (SIZE / 2);

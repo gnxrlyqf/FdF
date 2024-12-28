@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_fvector3	init_v(float x, float y, float z)
+t_fvector3	init_v3(float x, float y, float z)
 {
 	t_fvector3	out;
 
@@ -22,7 +22,7 @@ t_fvector3	init_v(float x, float y, float z)
 	return (out);
 }
 
-t_fvector3	mul_matrix(t_fvector3 vec, t_matrix2 mat)
+t_fvector3	mul_matrix3(t_fvector3 vec, t_matrix3 mat)
 {
 	t_fvector3	out;
 

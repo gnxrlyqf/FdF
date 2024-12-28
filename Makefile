@@ -1,5 +1,5 @@
 CC = cc
-WINDOW_SIZE = 720
+SIZE = 480
 CFLAGS = -Wall -Werror -Wextra
 LIB = -L./minilibx-linux -L./libft -lft -lmlx -lXext -lX11 -lm -lz
 INC = -I./minilibx-linux -I./includes
@@ -18,7 +18,7 @@ lib:
 	make -C libft/
 
 %.o: %.c
-	$(CC) $(INC) $(CFLAGS) -O3 -c $< -o $@ -DWINDOW_SIZE=$(WINDOW_SIZE)
+	$(CC) $(INC) $(CFLAGS) -O3 -c $< -o $@ -DSIZE=$(SIZE)
 
 clean:
 	rm -rf $(SRC:.c=.o)
