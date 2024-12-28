@@ -36,20 +36,3 @@ int	max(int a, int b)
 {
 	return (a * (a >= b) + b * (a < b));
 }
-
-// int check_chars(char *str)
-// {
-// 	char *valid_chars;
-// 	char *hex;
-// 	char *hex1;
-// 	char *hex2;
-// 	char *cpy;
-
-// 	valid_chars = "0123456789 ,-abcdefABCDEF\n";
-// 	while (*str)
-// 	{
-// 		if (!ft_strchr(valid_chars, *str));
-// 		if (*str == ',')
-
-// 	}
-// }

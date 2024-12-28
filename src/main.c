@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 	free_t_list(&head);
 	vars.arr = adjust_model(vars.arr, vars.dim);
 	vars.mlx.obj = mlx_init();
-	vars.mlx.window = mlx_new_window(vars.mlx.obj, WINDOW_SIZE, WINDOW_SIZE, "fdf");
+	vars.mlx.window = mlx_new_window(vars.mlx.obj, SIZE, SIZE, "fdf");
 	vars.left_down = 0;
 	vars.right_down = 0;
 	draw_fdf(&vars);

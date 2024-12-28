@@ -14,8 +14,8 @@
 # define FDF_H
 
 # define DEG 57.295779513
-# ifndef WINDOW_SIZE
-# 	define WINDOW_SIZE 720
+# ifndef SIZE
+# 	define SIZE 720
 # endif
 
 # include <stdio.h>

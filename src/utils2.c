@@ -72,16 +72,16 @@ void throw_err(int code, char *str, t_list **head)
 	if (head)
 		free_t_list(head);
 	if (code == 1)
-		write(1, "Error 1 - Invalid input: invalid file extension\n", 48);
+		write(1, "Error: Invalid input - invalid file extension\n", 47);
 	if (code == 2)
-		write(1, "Error 2 - Invalid input: wrong number of arguments\n", 51);
+		write(1, "Error: Invalid input - wrong number of arguments\n", 50);
 	if (code == 3)
-		write(1, "Error 3 - Invalid file: file doesn't exist\n", 43);
+		write(1, "Error: Invalid file - file doesn't exist\n", 42);
 	if (code == 4)
-		write(1, "Error 4 - Invalid file: unknown character\n", 42);
+		write(1, "Error: Invalid file - unknown character\n", 41);
 	if (code == 5)
-		write(1, "Error 5 - Invalid map: map too small\n", 37);
+		write(1, "Error: Invalid map - map too small\n", 36);
 	if (code == 6)
-		write(1, "Error 6 - Invalid map: map not rectangular\n", 43);
+		write(1, "Error: Invalid map - map not rectangular\n", 42);
 	exit(code);
 }

@@ -53,7 +53,6 @@ int close_window(t_vars *vars)
 	mlx_destroy_window(vars->mlx.obj, vars->mlx.window);
 	mlx_destroy_display(vars->mlx.obj);
 	free(vars->mlx.obj);
-	// mlx_destroy_image(vars->mlx, (vars->img).img);
 	exit(0);
 	return (0);	
 }

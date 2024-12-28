@@ -68,7 +68,7 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 	float scale;
 
 	max_height = peak(arr, dim);
-	scale = (WINDOW_SIZE - 100) / (float)max(max(dim.x, dim.y), max_height);
+	scale = (SIZE - 100) / (float)max(max(dim.x, dim.y), max_height);
 	i = 0;
 	while (i < dim.y)
 	{
@@ -100,8 +100,8 @@ t_vertex2	project_point(t_vertex3 point)
 	transform = mul_matrix(point.pos, cam);
 	transform = rotate_y(transform, -45);
 	transform = rotate_z(transform, 35.264);
-	out.pos.x = transform.x + (WINDOW_SIZE / 2);
-	out.pos.y = (WINDOW_SIZE / 2) - transform.y;
+	out.pos.x = transform.x + (SIZE / 2);
+	out.pos.y = (SIZE / 2) - transform.y;
 	out.col = point.col;
 	return (out);
 }
