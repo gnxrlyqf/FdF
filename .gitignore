@@ -1,4 +1,4 @@
-.vscode
+.vscode/
 /test_maps
 src/*.o
 libft/*.o
