@@ -15,9 +15,11 @@
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if (x >= 0 && x < WINDOW_SIZE && y >= 0 && y < WINDOW_SIZE)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
+	}
 }
 
 void	draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img)
@@ -93,7 +95,7 @@ int	draw_fdf(t_ftl *vars)
 {
 	t_data	img;
 
-	img.img = mlx_new_image(vars->mlx.obj, MAX, MAX);
+	img.img = mlx_new_image(vars->mlx.obj, WINDOW_SIZE, WINDOW_SIZE);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
 	draw_x(vars->arr, vars->dim, &img);

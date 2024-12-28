@@ -14,8 +14,9 @@
 # define FDF_H
 
 # define DEG 57.295779513
-# define MIN 480
-# define MAX 720
+# ifndef WINDOW_SIZE
+# 	define WINDOW_SIZE 720
+# endif
 
 # include <stdio.h>
 # include <mlx.h>
@@ -81,7 +82,8 @@ typedef struct s_ftl
 	t_mlx_instance	mlx;
 	t_vector2		dim;
 	t_vertex3		**arr;
-	int				mouse_down;
+	int				right_down;
+	int				left_down;
 }				t_ftl;
 
 typedef struct s_data
@@ -114,12 +116,13 @@ t_fvector3	rotate_y(t_fvector3 point, float angle);
 t_fvector3	rotate_z(t_fvector3 point, float angle);
 void		rotate_model(t_vertex3 ***arr, float angle,
 				t_fvector3 (*f)(t_fvector3, float), t_vector2 dim);
-t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim, int *size);
+t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int			max(int a, int b);
 int			color_to_int(t_color color);
 t_color		int_to_color(int color);
 int			max(int a, int b);
 int			get_grad(int p1color, int p2color, int step, int steps);
+void		translate_model(t_vertex3 ***arr, int x, int y, t_vector2 dim);
 
 #endif

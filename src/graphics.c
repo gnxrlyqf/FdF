@@ -31,23 +31,45 @@ int	get_grad(int p1color, int p2color, int step, int steps)
 	out.b = argb1.b + round(grad.b * step);
 	return (color_to_int(out));
 }
+int peak(t_vertex3 **arr, t_vector2 dim)
+{
+	int i;
+	int j;
+	int peak;
 
-t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim, int *size)
+	i = -1;
+	peak = 0;
+	while (++i < dim.y)
+	{
+		j = -1;
+		while (++j < dim.x)
+			if (arr[i][j].pos.z > peak)
+				peak = arr[i][j].pos.z;
+	}
+	return (peak);
+}
+
+t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 {
 	int	i;
 	int	j;
+	int max_height;
+	float scale;
 
-	(void)size;
+	max_height = peak(arr, dim);
+	scale = (WINDOW_SIZE - 100) / (float)max(max(dim.x, dim.y), max_height);
 	i = 0;
 	while (i < dim.y)
 	{
 		j = 0;
 		while (j < dim.x)
 		{
-			arr[i][j].pos.x -= dim.x / 2;
-			arr[i][j].pos.y -= dim.y / 2;
-			arr[i][j].pos.z -= dim.y / 2;
-			arr[i][j].pos.z *= 5;
+			arr[i][j].pos.x -= (dim.x / 2) - .5 * (dim.x % 2 == 0);
+			arr[i][j].pos.y -= (dim.y / 2) - .5 * (dim.y % 2 == 0);
+			arr[i][j].pos.z -= max_height / 4;
+			arr[i][j].pos.x *= scale;
+			arr[i][j].pos.y *= scale;
+			arr[i][j].pos.z *= scale / 2;
 			j++;
 		}
 		i++;
@@ -67,8 +89,8 @@ t_vertex2	project_point(t_vertex3 point)
 	transform = mul_matrix(point.pos, cam);
 	transform = rotate_y(transform, -45);
 	transform = rotate_z(transform, 35.264);
-	out.pos.x = transform.x + (MAX / 2);
-	out.pos.y = (MAX / 2) - transform.y;
+	out.pos.x = transform.x + (WINDOW_SIZE / 2);
+	out.pos.y = (WINDOW_SIZE / 2) - transform.y;
 	out.col = point.col;
 	return (out);
 }
