@@ -47,7 +47,7 @@ void scan_file(int fd)
 		cpy = str;
 		while (*cpy)
 		{
-			if (!ft_strchr("0123456789 ,-xabcdefABCDEF\n\t\r", *cpy))
+			if (!ft_strchr("0123456789 ,-abcdefABCDEFx\n\t\r", *cpy))
 				throw_err(4, str, NULL);
 			cpy++;
 		}
