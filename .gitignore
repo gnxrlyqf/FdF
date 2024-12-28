@@ -2,5 +2,6 @@
 /test_maps
 src/*.o
 libft/*.o
+libft/libft.a
 minilibx-linux/*.o
 fdf
