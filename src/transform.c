@@ -30,7 +30,6 @@ void	translate_model(t_vertex3 ***arr, int x, int y, t_vector2 dim)
 {
 	int	i;
 	int	j;
-
 	i = -1;
 	while (++i < dim.y)
 	{

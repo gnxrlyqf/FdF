@@ -46,11 +46,11 @@ t_list	*parse_file(int fd)
 	t_list	*head;
 	t_list	*curr;
 	char	*str;
-	int		term_count;
+	int		word_count;
 
 	str = get_next_line(fd);
-	term_count = count_words(str, " ");
-	if (!str || !*str || term_count < 1)
+	word_count = count_words(str, " ");
+	if (!str || !*str || word_count < 1)
 		return (free(str), NULL);
 	head = new_node(str);
 	curr = head;
@@ -59,8 +59,8 @@ t_list	*parse_file(int fd)
 		str = get_next_line(fd);
 		if (!str)
 			break ;
-		if (!*str || count_words(str, " ") != term_count)
-			return (free(str), t_free_list(&head), NULL);
+		if (!*str || count_words(str, " ") != word_count)
+			return (free(str), free_t_list(&head), NULL);
 		curr->next = new_node(str);
 		curr = curr->next;
 	}
@@ -105,6 +105,5 @@ t_vertex3	**convert_to_coords(t_list *head)
 		head = head->next;
 		i++;
 	}
-	arr[i] = NULL;
 	return (arr);
 }

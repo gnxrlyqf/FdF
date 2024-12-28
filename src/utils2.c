@@ -27,7 +27,7 @@ size_t	list_len(t_list *head)
 	return (len);
 }
 
-void	t_free_list(t_list **head)
+void	free_t_list(t_list **head)
 {
 	t_list	*current;
 	t_list	*temp;
@@ -39,7 +39,18 @@ void	t_free_list(t_list **head)
 	{
 		temp = current;
 		current = current->next;
+		free(temp->str);
 		free(temp);
 	}
 	*head = NULL;
+}
+void free_model(t_vertex3 **arr, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+		free(arr[i++]);
+	free(arr);
+	// *arr = NULL;
 }

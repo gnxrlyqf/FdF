@@ -91,7 +91,7 @@ void	draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img)
 	}
 }
 
-int	draw_fdf(t_ftl *vars)
+int	draw_fdf(t_vars *vars)
 {
 	t_data	img;
 
@@ -101,5 +101,6 @@ int	draw_fdf(t_ftl *vars)
 	draw_x(vars->arr, vars->dim, &img);
 	draw_y(vars->arr, vars->dim, &img);
 	mlx_put_image_to_window(vars->mlx.obj, vars->mlx.window, img.img, 0, 0);
+	mlx_destroy_image(vars->mlx.obj, img.img);
 	return (0);
 }

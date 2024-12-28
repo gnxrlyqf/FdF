@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int	mouse_motion(int x, int y, t_ftl *vars)
+int	mouse_motion(int x, int y, t_vars *vars)
 {
 	static t_vector2	old;
 
@@ -26,7 +26,7 @@ int	mouse_motion(int x, int y, t_ftl *vars)
 	return (0);
 }
 
-int	mouse_down(int b, int x, int y, t_ftl *vars)
+int	mouse_down(int b, int x, int y, t_vars *vars)
 {
 	(void)x;
 	(void)y;
@@ -37,7 +37,7 @@ int	mouse_down(int b, int x, int y, t_ftl *vars)
 	return (0);
 }
 
-int	mouse_up(int b, int x, int y, t_ftl *vars)
+int	mouse_up(int b, int x, int y, t_vars *vars)
 {
 	(void)x;
 	(void)y;
@@ -46,4 +46,14 @@ int	mouse_up(int b, int x, int y, t_ftl *vars)
 	if (b == 3)
 		vars->right_down = 0;
 	return (0);
+}
+int close_window(t_vars *vars)
+{
+	free_model(vars->arr, vars->dim.y);
+	mlx_destroy_window(vars->mlx.obj, vars->mlx.window);
+	mlx_destroy_display(vars->mlx.obj);
+	free(vars->mlx.obj);
+	// mlx_destroy_image(vars->mlx, (vars->img).img);
+	exit(0);
+	return (0);	
 }

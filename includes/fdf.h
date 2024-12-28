@@ -77,15 +77,6 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-typedef struct s_ftl
-{
-	t_mlx_instance	mlx;
-	t_vector2		dim;
-	t_vertex3		**arr;
-	int				right_down;
-	int				left_down;
-}				t_ftl;
-
 typedef struct s_data
 {
 	void	*img;
@@ -95,6 +86,15 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
+typedef struct s_vars
+{
+	t_mlx_instance	mlx;
+	t_vector2		dim;
+	t_vertex3		**arr;
+	int				right_down;
+	int				left_down;
+}				t_vars;
+
 void		draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img);
 t_fvector3	mul_matrix(t_fvector3 vec, t_matrix2 mat);
 t_vertex2	project_point(t_vertex3 point);
@@ -102,15 +102,15 @@ t_fvector3	init_v(float x, float y, float z);
 int			open_file(char *filename);
 t_list		*parse_file(int fd);
 t_list		*new_node(char *str);
-void		t_free_list(t_list **head);
+void		free_t_list(t_list **head);
 t_vertex3	**convert_to_coords(t_list *head);
 size_t		list_len(t_list *head);
-int			draw_fdf(t_ftl *vars_ig);
+int			draw_fdf(t_vars *vars_ig);
 void		draw_x(t_vertex3 **arr, t_vector2 dim, t_data *img);
 void		draw_y(t_vertex3 **arr, t_vector2 dim, t_data *img);
-int			mouse_motion(int x, int y, t_ftl *vars);
-int			mouse_down(int b, int x, int y, t_ftl *vars);
-int			mouse_up(int b, int x, int y, t_ftl *vars);
+int			mouse_motion(int x, int y, t_vars *vars);
+int			mouse_down(int b, int x, int y, t_vars *vars);
+int			mouse_up(int b, int x, int y, t_vars *vars);
 t_fvector3	rotate_x(t_fvector3 point, float angle);
 t_fvector3	rotate_y(t_fvector3 point, float angle);
 t_fvector3	rotate_z(t_fvector3 point, float angle);
@@ -124,5 +124,7 @@ t_color		int_to_color(int color);
 int			max(int a, int b);
 int			get_grad(int p1color, int p2color, int step, int steps);
 void		translate_model(t_vertex3 ***arr, int x, int y, t_vector2 dim);
+int			close_window(t_vars *vars);
+void		free_model(t_vertex3 **arr, int size);
 
 #endif
