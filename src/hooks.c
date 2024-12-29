@@ -33,16 +33,16 @@ int	mouse_down(int b, int x, int y, t_vars *vars)
 {
 	(void)x;
 	(void)y;
-	// if (b == 4)
-	// {
-	// 	vars->scale += .01;
-	// 	draw_fdf(vars);
-	// }
-	// if (b == 5)
-	// {
-	// 	vars->scale -= .01;
-	// 	draw_fdf(vars);
-	// }
+	if (b == 4)
+	{
+		vars->scale += .1;
+		draw_fdf(vars);
+	}
+	if (b == 5)
+	{
+		vars->scale -= .1;
+		draw_fdf(vars);
+	}
 	if (b == 1)
 		vars->left_down = 1;
 	if (b == 3)
