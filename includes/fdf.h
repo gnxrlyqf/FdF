@@ -15,7 +15,7 @@
 
 # define DEG 57.295779513
 # ifndef SIZE
-# 	define SIZE 720
+#  define SIZE 720
 # endif
 
 # include <stdio.h>
@@ -62,7 +62,6 @@ typedef struct s_matrix3
 	t_fvector3	y;
 	t_fvector3	z;
 }				t_matrix3;
-
 
 typedef struct s_color
 {

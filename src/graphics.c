@@ -32,7 +32,6 @@ int	get_grad(int p1color, int p2color, int step, int steps)
 	return ((out.a << 24) | (out.r << 16) | (out.g << 8) | out.b);
 }
 
-
 t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 {
 	int		i;
@@ -63,7 +62,7 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 
 t_vertex2	project_point(t_vertex3 point, int type, float scale)
 {
-	t_vertex2 out;
+	t_vertex2	out;
 
 	point.pos.x *= scale;
 	point.pos.y *= scale;
@@ -78,10 +77,10 @@ t_vertex2	project_point(t_vertex3 point, int type, float scale)
 
 t_vector2	project_perspective(t_fvector3 point)
 {
-	t_fvector3 cam;
-	t_fvector3 plane;
-	t_matrix3 transform;
-	t_vector2 out;
+	t_fvector3	cam;
+	t_fvector3	plane;
+	t_matrix3	transform;
+	t_vector2	out;
 
 	cam = init_v3(-120, 0, 120);
 	plane = init_v3(0, 0, 110);

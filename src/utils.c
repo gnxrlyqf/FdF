@@ -47,6 +47,7 @@ t_color	int_to_color(int color)
 	out.b = color & 0xFF;
 	return (out);
 }
+
 int	peak(t_vertex3 **arr, t_vector2 dim)
 {
 	int	i;
