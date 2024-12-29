@@ -102,7 +102,8 @@ typedef struct s_vars
 void		draw_line(t_vertex2 p1, t_vertex2 p2, t_data *img);
 t_fvector3	mul_matrix3(t_fvector3 vec, t_matrix3 mat);
 t_vertex2	project_point(t_vertex3 point, int type, float scale);
-t_vertex2	project_isometric(t_vertex3 point, float scale);
+t_vector2	project_isometric(t_fvector3 point);
+t_vector2	project_perspective(t_fvector3 point);
 t_fvector3	init_v3(float x, float y, float z);
 int			open_file(char *filename);
 t_list		*parse_file(int fd);
@@ -131,6 +132,7 @@ int			get_grad(int p1color, int p2color, int step, int steps);
 int			close_window(t_vars *vars);
 void		free_model(t_vertex3 **arr, int size);
 void		throw_err(int code, char *str, t_list **head);
-t_vars		init_vars(t_list *head);
+t_vars		init_vars(t_list *head, char *type);
+int			peak(t_vertex3 **arr, t_vector2 dim);
 
 #endif

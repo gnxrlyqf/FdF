@@ -27,7 +27,7 @@ t_fvector3 (*f)(t_fvector3, float), t_vector2 dim)
 	}
 }
 
-t_fvector3	rotate_x(t_fvector3 point, float angle)
+t_fvector3	rotate_z(t_fvector3 point, float angle)
 {
 	t_matrix3	rot;
 
@@ -47,7 +47,7 @@ t_fvector3	rotate_y(t_fvector3 point, float angle)
 	return (mul_matrix3(point, rot));
 }
 
-t_fvector3	rotate_z(t_fvector3 point, float angle)
+t_fvector3	rotate_x(t_fvector3 point, float angle)
 {
 	t_matrix3	rot;
 

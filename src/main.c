@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		throw_err(2, NULL, NULL);
 	if (SIZE > 1080)
 		throw_err(7, NULL, NULL);
-	vars = init_vars(parse_file(open_file(av[1])));
+	vars = init_vars(parse_file(open_file(av[1])), av[2]);
 	draw_fdf(&vars);
 	mlx_hook(vars.mlx.window, 4, (1L << 2), mouse_down, &vars);
 	mlx_hook(vars.mlx.window, 5, (1L << 3), mouse_up, &vars);
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 	mlx_loop(vars.mlx.obj);
 }
 
-t_vars	init_vars(t_list *head)
+t_vars	init_vars(t_list *head, char *type)
 {
 	t_vars	vars;
 
@@ -44,6 +44,10 @@ t_vars	init_vars(t_list *head)
 	vars.offset.x = 0;
 	vars.offset.y = 0;
 	vars.scale = 1;
+	if (type)
+		vars.type = ft_atoi_ptr(&type);
+	else
+		vars.type = 1;
 	free_t_list(&head);
 	return (vars);
 }

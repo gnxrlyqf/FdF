@@ -17,7 +17,7 @@ int	mouse_motion(int x, int y, t_vars *vars)
 	static t_vector2	old;
 
 	if (vars->left_down)
-		rotate_model(&(vars->arr), (x - old.x) * -.01, rotate_x, vars->dim);
+		rotate_model(&(vars->arr), (x - old.x) * -.01, rotate_z, vars->dim);
 	if (vars->right_down)
 	{
 		vars->offset.x += x - old.x;
@@ -40,7 +40,7 @@ int	mouse_down(int b, int x, int y, t_vars *vars)
 	}
 	if (b == 5)
 	{
-		vars->scale -= .1;
+		vars->scale -= .1 * (vars->scale - .1);
 		draw_fdf(vars);
 	}
 	if (b == 1)

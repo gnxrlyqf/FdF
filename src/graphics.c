@@ -32,23 +32,6 @@ int	get_grad(int p1color, int p2color, int step, int steps)
 	return ((out.a << 24) | (out.r << 16) | (out.g << 8) | out.b);
 }
 
-int	peak(t_vertex3 **arr, t_vector2 dim)
-{
-	int	i;
-	int	j;
-	int	peak;
-
-	i = -1;
-	peak = 0;
-	while (++i < dim.y)
-	{
-		j = -1;
-		while (++j < dim.x)
-			if (arr[i][j].pos.z > peak)
-				peak = arr[i][j].pos.z;
-	}
-	return (peak);
-}
 
 t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 {
@@ -80,28 +63,55 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 
 t_vertex2	project_point(t_vertex3 point, int type, float scale)
 {
+	t_vertex2 out;
+
+	point.pos.x *= scale;
+	point.pos.y *= scale;
+	point.pos.z *= scale;
 	if (type == 1)
-		return (project_isometric(point, scale));
-	return (project_isometric(point, scale));
+		out.pos = project_isometric(point.pos);
+	if (type == 2)
+		out.pos = project_perspective(point.pos);
+	out.col = point.col;
+	return (out);
 }
 
-t_vertex2	project_isometric(t_vertex3 point, float scale)
+t_vector2	project_perspective(t_fvector3 point)
 {
-	t_fvector3	transform;
-	t_vertex2	out;
+	t_fvector3 cam;
+	t_fvector3 plane;
+	t_matrix3 transform;
+	t_vector2 out;
+
+	cam = init_v3(-120, 0, 120);
+	plane = init_v3(0, 0, 110);
+	point = rotate_x(point, 90);
+	point = rotate_y(point, 90);
+	plane = rotate_z(plane, 35.264);
+	point.x -= cam.x;
+	point.y -= cam.y;
+	point.z -= cam.z;
+	transform.x = init_v3(1, 0, plane.x / plane.z);
+	transform.y = init_v3(0, 1, plane.y / plane.z);
+	transform.z = init_v3(0, 0, 1 / plane.z);
+	point = mul_matrix3(point, transform);
+	out.x = point.x / point.z + (SIZE / 2);
+	out.y = (SIZE / 2) - point.y / point.z;
+	return (out);
+}
+
+t_vector2	project_isometric(t_fvector3 point)
+{
+	t_vector2	out;
 	t_matrix3	cam;
 
 	cam.x = init_v3(1, 0, 0);
 	cam.y = init_v3(0, 0, -1);
 	cam.z = init_v3(0, -1, 0);
-	point.pos.x *= scale;
-	point.pos.y *= scale;
-	point.pos.z *= scale;
-	transform = mul_matrix3(point.pos, cam);
-	transform = rotate_y(transform, -45);
-	transform = rotate_z(transform, 35.264);
-	out.pos.x = transform.x + (SIZE / 2);
-	out.pos.y = (SIZE / 2) - transform.y;
-	out.col = point.col;
+	point = mul_matrix3(point, cam);
+	point = rotate_y(point, -45);
+	point = rotate_x(point, 35.264);
+	out.x = point.x + (SIZE / 2);
+	out.y = (SIZE / 2) - point.y;
 	return (out);
 }

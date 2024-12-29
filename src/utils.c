@@ -47,3 +47,20 @@ t_color	int_to_color(int color)
 	out.b = color & 0xFF;
 	return (out);
 }
+int	peak(t_vertex3 **arr, t_vector2 dim)
+{
+	int	i;
+	int	j;
+	int	peak;
+
+	i = -1;
+	peak = 0;
+	while (++i < dim.y)
+	{
+		j = -1;
+		while (++j < dim.x)
+			if (arr[i][j].pos.z > peak)
+				peak = arr[i][j].pos.z;
+	}
+	return (peak);
+}
