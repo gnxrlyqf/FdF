@@ -26,21 +26,6 @@ t_fvector3 (*f)(t_fvector3, float), t_vector2 dim)
 			(*arr)[i][j].pos = f((*arr)[i][j].pos, angle);
 	}
 }
-void	translate_model(t_vertex3 ***arr, int x, int y, t_vector2 dim)
-{
-	int	i;
-	int	j;
-	i = -1;
-	while (++i < dim.y)
-	{
-		j = -1;
-		while (++j < dim.x)
-		{
-			(*arr)[i][j].pos.x += x;
-			(*arr)[i][j].pos.y += y;
-		}
-	}
-}
 
 t_fvector3	rotate_x(t_fvector3 point, float angle)
 {

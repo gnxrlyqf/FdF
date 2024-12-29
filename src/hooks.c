@@ -18,8 +18,11 @@ int	mouse_motion(int x, int y, t_vars *vars)
 
 	if (vars->left_down)
 		rotate_model(&(vars->arr), (x - old.x) * -.01, rotate_x, vars->dim);
-	else if (vars->right_down)
-		translate_model(&(vars->arr), x - old.x, y - old.y, vars->dim);
+	if (vars->right_down)
+	{
+		vars->offset.x += x - old.x;
+		vars->offset.y += y - old.y;
+	}
 	old.x = x;
 	old.y = y;
 	draw_fdf(vars);
@@ -30,6 +33,16 @@ int	mouse_down(int b, int x, int y, t_vars *vars)
 {
 	(void)x;
 	(void)y;
+	// if (b == 4)
+	// {
+	// 	vars->scale += .01;
+	// 	draw_fdf(vars);
+	// }
+	// if (b == 5)
+	// {
+	// 	vars->scale -= .01;
+	// 	draw_fdf(vars);
+	// }
 	if (b == 1)
 		vars->left_down = 1;
 	if (b == 3)

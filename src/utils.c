@@ -36,3 +36,13 @@ int	max(int a, int b)
 {
 	return (a * (a >= b) + b * (a < b));
 }
+t_color	int_to_color(int color)
+{
+	t_color	out;
+
+	out.a = (color >> 24) & 0xFF;
+	out.r = (color >> 16) & 0xFF;
+	out.g = (color >> 8) & 0xFF;
+	out.b = color & 0xFF;
+	return (out);
+}

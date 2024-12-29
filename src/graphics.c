@@ -12,17 +12,6 @@
 
 #include "fdf.h"
 
-t_color	int_to_color(int color)
-{
-	t_color	out;
-
-	out.a = (color >> 24) & 0xFF;
-	out.r = (color >> 16) & 0xFF;
-	out.g = (color >> 8) & 0xFF;
-	out.b = color & 0xFF;
-	return (out);
-}
-
 int	get_grad(int p1color, int p2color, int step, int steps)
 {
 	t_color	argb1;
@@ -88,17 +77,17 @@ t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 	return (arr);
 }
 
-t_vertex2	project_point(t_vertex3 point, int type)
+t_vertex2	project_point(t_vertex3 point, int type, float scale)
 {
 	if (type == 1)
-		return (project_isometric(point));
+		return (project_isometric(point, scale));
 	// if (type == 2)
 	// 	return (project_perspective(point));
-	return(project_isometric(point));
+	return(project_isometric(point, scale));
 }
 
 
-t_vertex2	project_isometric(t_vertex3 point)
+t_vertex2	project_isometric(t_vertex3 point, float scale)
 {
 	t_fvector3	transform;
 	t_vertex2	out;
@@ -107,6 +96,9 @@ t_vertex2	project_isometric(t_vertex3 point)
 	cam.x = init_v3(1, 0, 0);
 	cam.y = init_v3(0, 0, -1);
 	cam.z = init_v3(0, -1, 0);
+	point.pos.x *= scale;
+	point.pos.y *= scale;
+	point.pos.z *= scale;
 	transform = mul_matrix3(point.pos, cam);
 	transform = rotate_y(transform, -45);
 	transform = rotate_z(transform, 35.264);
