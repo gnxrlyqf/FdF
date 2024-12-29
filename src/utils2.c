@@ -26,6 +26,7 @@ size_t	list_len(t_list *head)
 	}
 	return (len);
 }
+
 t_list	*new_node(char *str)
 {
 	t_list	*new;
@@ -55,9 +56,10 @@ void	free_t_list(t_list **head)
 	}
 	*head = NULL;
 }
-void free_model(t_vertex3 **arr, int size)
+
+void	free_model(t_vertex3 **arr, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)
@@ -65,7 +67,7 @@ void free_model(t_vertex3 **arr, int size)
 	free(arr);
 }
 
-void throw_err(int code, char *str, t_list **head)
+void	throw_err(int code, char *str, t_list **head)
 {
 	if (str)
 		free(str);

@@ -29,9 +29,10 @@ int	main(int ac, char **av)
 	mlx_hook(vars.mlx.window, 17, 0, close_window, &vars);
 	mlx_loop(vars.mlx.obj);
 }
-t_vars		init_vars(t_list *head)
+
+t_vars	init_vars(t_list *head)
 {
-	t_vars vars;
+	t_vars	vars;
 
 	vars.dim.x = count_words(head->str, " ");
 	vars.dim.y = list_len(head);

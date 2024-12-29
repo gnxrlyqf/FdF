@@ -17,7 +17,7 @@ int	open_file(char *filename)
 {
 	char	*str;
 	char	*ext;
-	int fd;
+	int		fd;
 
 	ext = "fdf.";
 	str = filename;
@@ -34,10 +34,10 @@ int	open_file(char *filename)
 	return (open(filename, O_RDONLY));
 }
 
-void scan_file(int fd)
+void	scan_file(int fd)
 {
-	char *str;
-	char *cpy;
+	char	*str;
+	char	*cpy;
 
 	while (1)
 	{

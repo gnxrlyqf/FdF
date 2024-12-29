@@ -15,9 +15,10 @@
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
+
 	if (x >= 0 && x < SIZE && y >= 0 && y < SIZE)
 	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		dst = data->addr + (y * data->line_len + x * (data->bpp / 8));
 		*(unsigned int *)dst = color;
 	}
 }
@@ -104,7 +105,7 @@ int	draw_fdf(t_vars *vars)
 	t_data	img;
 
 	img.img = mlx_new_image(vars->mlx.obj, SIZE, SIZE);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len,
 			&img.endian);
 	draw_x(vars, &img);
 	draw_y(vars, &img);

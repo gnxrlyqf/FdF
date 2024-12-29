@@ -60,12 +60,13 @@ int	mouse_up(int b, int x, int y, t_vars *vars)
 		vars->right_down = 0;
 	return (0);
 }
-int close_window(t_vars *vars)
+
+int	close_window(t_vars *vars)
 {
 	free_model(vars->arr, vars->dim.y);
 	mlx_destroy_window(vars->mlx.obj, vars->mlx.window);
 	mlx_destroy_display(vars->mlx.obj);
 	free(vars->mlx.obj);
 	exit(0);
-	return (0);	
+	return (0);
 }

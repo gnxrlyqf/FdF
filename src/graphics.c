@@ -31,11 +31,12 @@ int	get_grad(int p1color, int p2color, int step, int steps)
 	out.b = argb1.b + round(grad.b * step);
 	return ((out.a << 24) | (out.r << 16) | (out.g << 8) | out.b);
 }
-int peak(t_vertex3 **arr, t_vector2 dim)
+
+int	peak(t_vertex3 **arr, t_vector2 dim)
 {
-	int i;
-	int j;
-	int peak;
+	int	i;
+	int	j;
+	int	peak;
 
 	i = -1;
 	peak = 0;
@@ -51,10 +52,10 @@ int peak(t_vertex3 **arr, t_vector2 dim)
 
 t_vertex3	**adjust_model(t_vertex3 **arr, t_vector2 dim)
 {
-	int	i;
-	int	j;
-	int max_height;
-	float scale;
+	int		i;
+	int		j;
+	int		max_height;
+	float	scale;
 
 	max_height = peak(arr, dim);
 	scale = (SIZE - (SIZE / 10)) / (float)max(max(dim.x, dim.y), max_height);
@@ -81,11 +82,8 @@ t_vertex2	project_point(t_vertex3 point, int type, float scale)
 {
 	if (type == 1)
 		return (project_isometric(point, scale));
-	// if (type == 2)
-	// 	return (project_perspective(point));
-	return(project_isometric(point, scale));
+	return (project_isometric(point, scale));
 }
-
 
 t_vertex2	project_isometric(t_vertex3 point, float scale)
 {
