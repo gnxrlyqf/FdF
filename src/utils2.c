@@ -74,18 +74,18 @@ void	throw_err(int code, char *str, t_list **head)
 	if (head)
 		free_t_list(head);
 	if (code == 1)
-		write(1, "Error: Invalid input - invalid file extension\n", 47);
+		(void)!write(1, "Error: Invalid input - invalid file extension\n", 47);
 	if (code == 2)
-		write(1, "Error: Invalid input - unknown argument\n", 40);
+		(void)!write(1, "Error: Invalid input - unknown argument\n", 40);
 	if (code == 3)
-		write(1, "Error: Invalid file - file not found\n", 37);
+		(void)!write(1, "Error: Invalid file - file not found\n", 37);
 	if (code == 4)
-		write(1, "Error: Invalid file - unknown character\n", 41);
+		(void)!write(1, "Error: Invalid file - unknown character\n", 41);
 	if (code == 5)
-		write(1, "Error: Invalid map - map too small\n", 36);
+		(void)!write(1, "Error: Invalid map - map too small\n", 36);
 	if (code == 6)
-		write(1, "Error: Invalid map - map not rectangular\n", 42);
+		(void)!write(1, "Error: Invalid map - map not rectangular\n", 42);
 	if (code == 7)
-		write(1, "Error: Invalid input - window size too large\n", 45);
+		(void)!write(1, "Error: Invalid input - window size too large\n", 45);
 	exit(code);
 }

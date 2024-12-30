@@ -1,6 +1,6 @@
 CC = cc
 SIZE = 480
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra -Werror
 LIB = -L./minilibx-linux -L./libft -lft -lmlx -lXext -lX11 -lm -lz
 INC = -I./minilibx-linux -I./includes
 SRC = $(wildcard src/*.c)

@@ -30,6 +30,8 @@ int	count_words(char *str, char *set)
 
 	i = 0;
 	count = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (!sep(str[i], set))
