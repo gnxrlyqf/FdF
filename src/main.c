@@ -35,6 +35,12 @@ t_vars	init_vars(t_list *head, char *type)
 {
 	t_vars	vars;
 
+	if (type)
+		vars.type = ft_atoi_ptr(&type);
+	else
+		vars.type = 1;
+	if (vars.type != 1 && vars.type != 2)
+		throw_err(2, NULL, &head);
 	vars.dim.x = count_words(head->str, " ");
 	vars.dim.y = list_len(head);
 	vars.arr = adjust_model(convert_to_coords(head), vars.dim);
@@ -45,10 +51,6 @@ t_vars	init_vars(t_list *head, char *type)
 	vars.offset.x = 0;
 	vars.offset.y = 0;
 	vars.scale = 1;
-	if (type)
-		vars.type = ft_atoi_ptr(&type);
-	else
-		vars.type = 1;
 	free_t_list(&head);
 	return (vars);
 }
