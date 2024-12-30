@@ -101,10 +101,8 @@ t_vertex3	*populate_arr(t_list *node, int size, int y)
 		arr[i].pos.z = (float)ft_atoi_ptr(&str);
 		if (*str == ',')
 			arr[i].col = ft_atoi_base_ptr(&str);
-		// printf("%.2f - %x ", arr[i].pos.z, arr[i].col);
 		i++;
 	}
-	// putchar('\n');
 	return (arr);
 }
 
