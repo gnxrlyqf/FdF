@@ -66,7 +66,6 @@ t_list	*parse_file(int fd)
 	str = get_next_line(fd);
 	word_count = count_words(str, " \n");
 	if (!str || !*str || word_count < 1)
-
 		throw_err(5, str, NULL);
 	head = new_node(str);
 	curr = head;
