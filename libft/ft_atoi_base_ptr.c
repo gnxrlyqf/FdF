@@ -55,8 +55,8 @@ int	ft_atoi_base_ptr(char **str)
 	if (!*str)
 		return (0);
 	cpy = *str + 3;
-	i = 0;
-	while (i++ < 6)
+	i = -1;
+	while (++i < 6)
 		if (cpy[i] >= 97 && cpy[i] <= 102)
 			return (convert(str, cpy, base2));
 	return (convert(str, cpy, base1));

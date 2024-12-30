@@ -79,6 +79,8 @@ t_list	*parse_file(int fd)
 		curr->next = new_node(str);
 		curr = curr->next;
 	}
+	if (!head->next)
+		throw_err(5, str, &head);
 	return (head);
 }
 
@@ -96,11 +98,13 @@ t_vertex3	*populate_arr(t_list *node, int size, int y)
 		arr[i].col = 0x00FFFFFF;
 		arr[i].pos.y = y;
 		arr[i].pos.x = i;
-		arr[i].pos.z = ft_atoi_ptr(&str);
+		arr[i].pos.z = (float)ft_atoi_ptr(&str);
 		if (*str == ',')
 			arr[i].col = ft_atoi_base_ptr(&str);
+		// printf("%.2f - %x ", arr[i].pos.z, arr[i].col);
 		i++;
 	}
+	// putchar('\n');
 	return (arr);
 }
 

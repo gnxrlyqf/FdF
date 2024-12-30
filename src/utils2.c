@@ -78,7 +78,7 @@ void	throw_err(int code, char *str, t_list **head)
 	if (code == 2)
 		write(1, "Error: Invalid input - unknown argument\n", 40);
 	if (code == 3)
-		write(1, "Error: Invalid file - file doesn't exist\n", 42);
+		write(1, "Error: Invalid file - file not found\n", 37);
 	if (code == 4)
 		write(1, "Error: Invalid file - unknown character\n", 41);
 	if (code == 5)

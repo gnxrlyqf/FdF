@@ -133,5 +133,6 @@ void		free_model(t_vertex3 **arr, int size);
 void		throw_err(int code, char *str, t_list **head);
 t_vars		init_vars(t_list *head, char *type);
 int			peak(t_vertex3 **arr, t_vector2 dim);
+int			key_hook(int key, t_vars *vars);
 
 #endif

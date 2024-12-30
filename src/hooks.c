@@ -61,6 +61,13 @@ int	mouse_up(int b, int x, int y, t_vars *vars)
 	return (0);
 }
 
+int	key_hook(int key, t_vars *vars)
+{
+	if (key == 0xFF1B)
+		close_window(vars);
+	return (0);
+}
+
 int	close_window(t_vars *vars)
 {
 	free_model(vars->arr, vars->dim.y);

@@ -23,6 +23,7 @@ int	main(int ac, char **av)
 		throw_err(7, NULL, NULL);
 	vars = init_vars(parse_file(open_file(av[1])), av[2]);
 	draw_fdf(&vars);
+	mlx_key_hook(vars.mlx.window, key_hook, &vars);
 	mlx_hook(vars.mlx.window, 4, (1L << 2), mouse_down, &vars);
 	mlx_hook(vars.mlx.window, 5, (1L << 3), mouse_up, &vars);
 	mlx_hook(vars.mlx.window, 6, (1L << 6), mouse_motion, &vars);

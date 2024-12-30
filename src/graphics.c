@@ -82,10 +82,10 @@ t_vector2	project_perspective(t_fvector3 point)
 	t_matrix3	transform;
 	t_vector2	out;
 
-	cam = init_v3(-120, 0, 120);
-	plane = init_v3(0, 0, 110);
+	cam = init_v3(-120, 0, -120);
+	plane = init_v3(0, 0, -110);
 	point = rotate_x(point, 90);
-	point = rotate_y(point, 90);
+	point = rotate_y(point, 45);
 	plane = rotate_z(plane, 35.264);
 	point.x -= cam.x;
 	point.y -= cam.y;
